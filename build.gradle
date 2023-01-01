@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'commons-io:commons-io:2.11.0'
+    implementation 'commons-io:commons-io:2.11.0'
+}
+
+shadowJar {
+    archiveClassifier.set('all')
+    dependencies {
+        include(dependency('commons-io:commons-io:2.11.0'))
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'legacy.dev.Main'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
